@@ -1,0 +1,27 @@
+server:
+  port: 6061
+
+spring:
+  application:
+    name: message-processor
+  cloud:
+    config:
+      enabled: false
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/testdb2
+    username: postgres
+    password: postgres
+    dbcp2:
+      validation-query: SELECT 1
+  jpa:
+    show-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
