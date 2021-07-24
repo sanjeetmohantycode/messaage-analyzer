@@ -3,10 +3,10 @@ package com.iot.meter.analyzer.domain;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.context.annotation.Description;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -19,6 +19,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table
+@Builder
 public class OriginalMessages implements Comparable<OriginalMessages>{
 
     @Id
@@ -30,6 +31,13 @@ public class OriginalMessages implements Comparable<OriginalMessages>{
     private long meterReading;
     private boolean cableStatus;
     private float remainingBattery;
+
+    private ZonedDateTime purgeDate;
+    private double latitude;
+    private double longitude;
+
+    @Builder.Default
+    private boolean processed = false;
 
     @Override
     public boolean equals(Object o) {
