@@ -44,9 +44,9 @@ public class ProcessedMessage {
     private Boolean freeBoolean4;
     private Boolean freeBoolean5;
 
-    BigDecimal freeBigDecimal1;
-    BigDecimal freeBigDecimal2;
-    BigDecimal freeBigDecimal3;
-    BigDecimal freeBigDecimal4;
-    BigDecimal freeBigDecimal5;
+    private BigDecimal freeBigDecimal1;
+    private BigDecimal freeBigDecimal2;
+    private BigDecimal freeBigDecimal3;
+    private BigDecimal freeBigDecimal4;
+    private BigDecimal freeBigDecimal5;
 }
