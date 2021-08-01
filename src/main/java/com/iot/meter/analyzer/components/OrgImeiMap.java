@@ -14,6 +14,7 @@ public class OrgImeiMap {
     public void loadDataFromDeviceManger() {
         //TODO: rest-template to consume data from device manager
         // Maintain the data for each service and it should load on startup
-        // Also update the map when a new record comes in or a record get delete.
+        // Also update the map when a new record comes in or a record get delete
+        // .
     }
 }
