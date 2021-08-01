@@ -3,6 +3,7 @@ package com.iot.meter.analyzer.domain;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +15,8 @@ import org.springframework.data.relational.core.mapping.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table
-public class ProcessedMessage {
+@Builder
+public class DailyConsumption {
 
     @Id
     String messageId;
@@ -29,8 +31,7 @@ public class ProcessedMessage {
     private BigDecimal unitsConsumedTillDate;
     private ZonedDateTime inceptionDate;
 
-    private BigDecimal monthlyUnitsConsumed;
-    private ZonedDateTime monthBeginDate;
+    private BigDecimal dailyUnitsConsumed;
 
     private String freeText1;
     private String freeText2;

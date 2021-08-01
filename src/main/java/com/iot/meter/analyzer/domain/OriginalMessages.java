@@ -36,8 +36,15 @@ public class OriginalMessages implements Comparable<OriginalMessages>{
     private double latitude;
     private double longitude;
 
+    private MessageSource messageSource;
+
+    private ZonedDateTime messageProcessingStartTime;
+    private ZonedDateTime messageProcessingEndTime;
+
     @Builder.Default
     private boolean processed = false;
+
+    private String orgId;
 
     @Override
     public boolean equals(Object o) {

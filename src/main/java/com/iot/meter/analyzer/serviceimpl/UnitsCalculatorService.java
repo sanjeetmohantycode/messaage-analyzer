@@ -1,8 +1,8 @@
 package com.iot.meter.analyzer.serviceimpl;
 
-import com.iot.meter.analyzer.domain.ProcessedMessage;
+import com.iot.meter.analyzer.domain.DailyConsumption;
 import com.iot.meter.analyzer.dto.IncomingIOTMessage;
-import com.iot.meter.analyzer.repository.ProcessedMessageRepository;
+import com.iot.meter.analyzer.repository.DailyConsumptionRepository;
 import com.iot.meter.analyzer.service.IOTMessageProcessService;
 import java.math.BigDecimal;
 import lombok.extern.slf4j.Slf4j;
@@ -12,32 +12,31 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 @Component
-@Order(3)
+@Order(2)
 @Slf4j
 public class UnitsCalculatorService implements IOTMessageProcessService {
 
     @Autowired
-    ProcessedMessageRepository processedMessageRepository;
+    DailyConsumptionRepository dailyConsumptionRepository;
 
     @Override
-    public void processIOTMessage(IncomingIOTMessage message, ProcessedMessage newProcessedMessage) {
+    public void processIOTMessage(IncomingIOTMessage message) {
 
-        // Step 1 : get record from database
-        Mono<ProcessedMessage> processedMessageDB = processedMessageRepository.findByImei(message.getImei());
-
-        // Step 2 : update the total units consumed field
-        processedMessageDB.subscribe(processMessageExisting -> updateMeterReadingAndCalculateUnits(processMessageExisting, message));
+        dailyConsumptionRepository.findByImei(message.getImei())
+                .blockOptional()
+                .ifPresentOrElse(dailyConsumption -> updateMeterReadingAndCalculateUnits(dailyConsumption, message), () -> new RuntimeException("no imei found"));
+        //TODO If messages are not found then need to create a new record.
     }
 
-    private void updateMeterReadingAndCalculateUnits(ProcessedMessage existingRecordInDb, IncomingIOTMessage message) {
+    private void updateMeterReadingAndCalculateUnits(DailyConsumption dailyConsumption, IncomingIOTMessage message) {
 
         //If message is invalid, calculation will be skipped.
-        if (!validateMessage(existingRecordInDb, message)) return;
+        if (!validateMessage(dailyConsumption, message)) return;
 
-        BigDecimal existingUnitsConsumed = existingRecordInDb.getUnitsConsumedTillDate();
+        BigDecimal existingUnitsConsumed = dailyConsumption.getUnitsConsumedTillDate();
         BigDecimal updatedUnitsConsumedTillDate =
-                existingUnitsConsumed.add(new BigDecimal((message.getMeterReading() - existingRecordInDb.getMeterReading())));
-        existingRecordInDb.setUnitsConsumedTillDate(updatedUnitsConsumedTillDate);
+                existingUnitsConsumed.add(new BigDecimal((message.getMeterReading() - dailyConsumption.getMeterReading())));
+        dailyConsumption.setUnitsConsumedTillDate(updatedUnitsConsumedTillDate);
     }
 
     /**
@@ -47,7 +46,7 @@ public class UnitsCalculatorService implements IOTMessageProcessService {
      * @param message
      * @return true if message is valid or else false.
      */
-    private boolean validateMessage(ProcessedMessage existingRecordInDb, IncomingIOTMessage message) {
+    private boolean validateMessage(DailyConsumption existingRecordInDb, IncomingIOTMessage message) {
 
         boolean isMessageValid = true;
 
@@ -66,7 +65,7 @@ public class UnitsCalculatorService implements IOTMessageProcessService {
      * @param message            Incoming IOT message.
      * @return true if message is valid otherwise false
      */
-    private boolean validateIfMeterReadingIsGood(ProcessedMessage existingRecordInDb, IncomingIOTMessage message) {
+    private boolean validateIfMeterReadingIsGood(DailyConsumption existingRecordInDb, IncomingIOTMessage message) {
         long unitsConsumed = (message.getMeterReading() - existingRecordInDb.getMeterReading());
         if (unitsConsumed <= 0) {
             log.error("Meter Reading is not correct.");
@@ -83,7 +82,7 @@ public class UnitsCalculatorService implements IOTMessageProcessService {
      * @param message            Incoming IOT message.
      * @return return true if the message is valid.
      */
-    private boolean validateIfMessageIsOldOrDuplicate(ProcessedMessage existingRecordInDB, IncomingIOTMessage message) {
+    private boolean validateIfMessageIsOldOrDuplicate(DailyConsumption existingRecordInDB, IncomingIOTMessage message) {
         if (existingRecordInDB.getMessageTimeStamp().isAfter(message.getMessageTimeStamp())) {
             log.warn("old dated message has arrived, so ignoring the message from calculation");
             log.warn(message.toString());

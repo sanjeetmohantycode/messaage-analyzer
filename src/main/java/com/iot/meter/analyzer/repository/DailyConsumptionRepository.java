@@ -1,12 +1,12 @@
 package com.iot.meter.analyzer.repository;
 
-import com.iot.meter.analyzer.domain.ProcessedMessage;
+import com.iot.meter.analyzer.domain.DailyConsumption;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
 @Repository
-public interface ProcessedMessageRepository extends ReactiveCrudRepository<ProcessedMessage, String> {
+public interface DailyConsumptionRepository extends ReactiveCrudRepository<DailyConsumption, String> {
 
-    Mono<ProcessedMessage> findByImei(String s);
+    Mono<DailyConsumption> findByImei(String s);
 }

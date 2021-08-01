@@ -1,6 +1,6 @@
 package com.iot.meter.analyzer.service;
 
-import com.iot.meter.analyzer.domain.ProcessedMessage;
+import com.iot.meter.analyzer.domain.DailyConsumption;
 import com.iot.meter.analyzer.dto.IncomingIOTMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -15,5 +15,5 @@ import org.springframework.transaction.annotation.Transactional;
 public interface IOTMessageProcessService {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    void processIOTMessage(IncomingIOTMessage message, ProcessedMessage processedMessage);
+    void processIOTMessage(IncomingIOTMessage message);
 }
