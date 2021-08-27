@@ -1,6 +1,5 @@
 package com.iot.meter.analyzer.service;
 
-import com.iot.meter.analyzer.domain.DailyConsumption;
 import com.iot.meter.analyzer.dto.IncomingIOTMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;

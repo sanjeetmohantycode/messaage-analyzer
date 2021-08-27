@@ -4,7 +4,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OrgImeiMap {
+public class OrganizationImeiMapService {
 
     /**
      * Below method loads data from device manage component

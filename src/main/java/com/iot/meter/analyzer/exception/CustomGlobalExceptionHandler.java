@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
 
-@ControllerAdvice
+//@ControllerAdvice
 public class CustomGlobalExceptionHandler extends ResponseStatusException {
 
     public CustomGlobalExceptionHandler(HttpStatus status) {

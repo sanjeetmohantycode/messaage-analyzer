@@ -32,6 +32,7 @@ public class DailyConsumption {
     private ZonedDateTime inceptionDate;
 
     private BigDecimal dailyUnitsConsumed;
+    private ZonedDateTime startDateOfCycle;
 
     private String freeText1;
     private String freeText2;

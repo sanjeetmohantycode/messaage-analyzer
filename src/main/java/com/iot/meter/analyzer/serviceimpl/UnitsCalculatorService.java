@@ -5,6 +5,7 @@ import com.iot.meter.analyzer.dto.IncomingIOTMessage;
 import com.iot.meter.analyzer.repository.DailyConsumptionRepository;
 import com.iot.meter.analyzer.service.IOTMessageProcessService;
 import java.math.BigDecimal;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
@@ -19,13 +20,13 @@ public class UnitsCalculatorService implements IOTMessageProcessService {
     @Autowired
     DailyConsumptionRepository dailyConsumptionRepository;
 
+
     @Override
     public void processIOTMessage(IncomingIOTMessage message) {
 
         dailyConsumptionRepository.findByImei(message.getImei())
                 .blockOptional()
                 .ifPresentOrElse(dailyConsumption -> updateMeterReadingAndCalculateUnits(dailyConsumption, message), () -> new RuntimeException("no imei found"));
-        //TODO If messages are not found then need to create a new record.
     }
 
     private void updateMeterReadingAndCalculateUnits(DailyConsumption dailyConsumption, IncomingIOTMessage message) {
@@ -42,17 +43,14 @@ public class UnitsCalculatorService implements IOTMessageProcessService {
     /**
      * Validate messages in db.
      *
-     * @param existingRecordInDb
-     * @param message
+     * @param existingRecordInDb record present in DB
+     * @param message IOTMessage to be validated
      * @return true if message is valid or else false.
      */
     private boolean validateMessage(DailyConsumption existingRecordInDb, IncomingIOTMessage message) {
 
-        boolean isMessageValid = true;
+        boolean isMessageValid = validateIfMessageIsOldOrDuplicate(existingRecordInDb, message);
 
-        if (!validateIfMessageIsOldOrDuplicate(existingRecordInDb, message)) {
-            isMessageValid = false;
-        }
         if (!validateIfMeterReadingIsGood(existingRecordInDb, message)) {
             isMessageValid = false;
         }
