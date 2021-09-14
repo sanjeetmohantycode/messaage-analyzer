@@ -1,17 +1,15 @@
 package com.iot.meter.analyzer.repository;
 
 import com.iot.meter.analyzer.domain.DailyConsumption;
-import org.springframework.data.repository.reactive.ReactiveCrudRepository;
+import java.util.List;
+import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 @Repository
-public interface DailyConsumptionRepository extends ReactiveCrudRepository<DailyConsumption, String> {
+public interface DailyConsumptionRepository extends JpaRepository<DailyConsumption, String> {
 
-    Mono<DailyConsumption> findByImei(String imei);
+    Optional<DailyConsumption> findByImei(String imei);
 
-    Flux<DailyConsumption> findByOrgId(String orgId);
-
-
+    Optional<List<DailyConsumption>> findByOrgId(String orgId);
 }

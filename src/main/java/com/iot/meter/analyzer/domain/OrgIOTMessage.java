@@ -2,13 +2,13 @@ package com.iot.meter.analyzer.domain;
 
 import java.time.ZonedDateTime;
 import java.util.Objects;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
 
 /**
  *  This class is the domain model for all IOT messages,
@@ -20,7 +20,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @NoArgsConstructor
 @Table
 @Builder
-public class OriginalMessages implements Comparable<OriginalMessages>{
+public class OrgIOTMessage implements Comparable<OrgIOTMessage>{
 
     @Id
     private String id;
@@ -50,7 +50,7 @@ public class OriginalMessages implements Comparable<OriginalMessages>{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OriginalMessages that = (OriginalMessages) o;
+        OrgIOTMessage that = (OrgIOTMessage) o;
         return messageCount == that.messageCount && meterReading == that.meterReading && cableStatus == that.cableStatus && Float.compare(that.remainingBattery, remainingBattery) == 0 && Objects.equals(id, that.id) && deviceType == that.deviceType && Objects.equals(imei, that.imei) && Objects.equals(messageTimeStamp, that.messageTimeStamp);
     }
 
@@ -60,8 +60,8 @@ public class OriginalMessages implements Comparable<OriginalMessages>{
     }
 
     @Override
-    public int compareTo(OriginalMessages originalMessages) {
-        if(originalMessages.getMessageTimeStamp().isAfter(this.getMessageTimeStamp())) {
+    public int compareTo(OrgIOTMessage orgIOTMessage) {
+        if(orgIOTMessage.getMessageTimeStamp().isAfter(this.getMessageTimeStamp())) {
             return 1;
         } else {
             return -1;

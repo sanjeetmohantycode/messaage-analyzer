@@ -1,21 +1,27 @@
 package com.iot.meter.analyzer.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
+import lombok.ToString;
+
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table
+@Entity
 @Builder
+@ToString
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DailyConsumption {
 
     @Id

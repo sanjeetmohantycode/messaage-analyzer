@@ -1,0 +1,26 @@
+[
+  {
+    "messageId": "212121212qwweyqw7e",
+    "imei": "12345",
+    "messageCount": 1,
+    "messageTimeStamp": null,
+    "meterReading": 200,
+    "dailyUnitsConsumed": 105,
+    "deviceType": "WM",
+    "unitsConsumedInCurrentCycle": 55,
+    "startDateOfCycle": null,
+    "orgId": "Sicken"
+  },
+  {
+    "messageId": "212121212qwweyqw7e",
+    "imei": "12346",
+    "messageCount": 1,
+    "messageTimeStamp": null,
+    "meterReading": 400,
+    "dailyUnitsConsumed": 105,
+    "deviceType": "WM",
+    "unitsConsumedInCurrentCycle": 78,
+    "startDateOfCycle": null,
+    "orgId": "Sicken-1"
+  }
+]

@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
 
 @Component
 @Order(2)
@@ -25,8 +24,9 @@ public class UnitsCalculatorService implements IOTMessageProcessService {
     public void processIOTMessage(IncomingIOTMessage message) {
 
         dailyConsumptionRepository.findByImei(message.getImei())
-                .blockOptional()
-                .ifPresentOrElse(dailyConsumption -> updateMeterReadingAndCalculateUnits(dailyConsumption, message), () -> new RuntimeException("no imei found"));
+                .ifPresentOrElse(record -> updateMeterReadingAndCalculateUnits(record,message),
+                        () -> new RuntimeException("Remove this, this just a placeholder"));
+
     }
 
     private void updateMeterReadingAndCalculateUnits(DailyConsumption dailyConsumption, IncomingIOTMessage message) {

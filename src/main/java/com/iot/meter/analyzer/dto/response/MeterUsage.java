@@ -14,5 +14,4 @@ import lombok.NoArgsConstructor;
 public class MeterUsage {
     String imeiNumber;
     BigDecimal unitsConsumedInCurrentCycle;
-    ZonedDateTime startDateOfCycle;
 }

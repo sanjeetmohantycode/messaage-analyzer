@@ -1,7 +1,9 @@
 package com.iot.meter.analyzer.domain;
 
 public enum MessageSource {
-    IOT_HUB("Message From IOT Device");
+    MQTT_HUB("Message via MQTT"),
+    REST_CALL("Message via rest");
+
 
     @lombok.Getter
     private final String messageSourceName;

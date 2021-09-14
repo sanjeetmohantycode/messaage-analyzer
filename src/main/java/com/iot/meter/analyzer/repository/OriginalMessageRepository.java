@@ -1,9 +1,10 @@
 package com.iot.meter.analyzer.repository;
 
-import com.iot.meter.analyzer.domain.OriginalMessages;
-import org.springframework.data.repository.reactive.ReactiveCrudRepository;
+import com.iot.meter.analyzer.domain.OrgIOTMessage;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface OriginalMessageRepository extends ReactiveCrudRepository<OriginalMessages, String> {
+public interface OriginalMessageRepository extends JpaRepository<OrgIOTMessage, String> {
 }

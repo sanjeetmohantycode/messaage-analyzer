@@ -1,0 +1,10 @@
+{
+  "orgId": "Sicken",
+  "startDateOfCycle": null,
+  "meterUsageList": [
+    {
+      "imeiNumber": "12345",
+      "unitsConsumedInCurrentCycle": null
+    }
+  ]
+}

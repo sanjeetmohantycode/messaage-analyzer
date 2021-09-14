@@ -1,8 +1,7 @@
 package com.iot.meter.analyzer.serviceimpl;
 
 import com.iot.meter.analyzer.domain.DeviceType;
-import com.iot.meter.analyzer.domain.OriginalMessages;
-import com.iot.meter.analyzer.domain.DailyConsumption;
+import com.iot.meter.analyzer.domain.OrgIOTMessage;
 import com.iot.meter.analyzer.dto.IncomingIOTMessage;
 import com.iot.meter.analyzer.repository.OriginalMessageRepository;
 import com.iot.meter.analyzer.service.IOTMessageProcessService;
@@ -20,14 +19,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Order(1)
-public class OriginalMessageProcessor implements IOTMessageProcessService {
+public class OriginalIOTMessageProcessor implements IOTMessageProcessService {
 
     private final OriginalMessageRepository originalMessageRepository;
 
     private final OrganizationService organizationService;
 
     @Autowired
-    public OriginalMessageProcessor(OriginalMessageRepository originalMessageRepository, OrganizationService organizationService) {
+    public OriginalIOTMessageProcessor(OriginalMessageRepository originalMessageRepository, OrganizationService organizationService) {
         this.originalMessageRepository = originalMessageRepository;
         this.organizationService = organizationService;
     }
@@ -44,12 +43,12 @@ public class OriginalMessageProcessor implements IOTMessageProcessService {
 
     @Override
     public void processIOTMessage(IncomingIOTMessage message) {
-        OriginalMessages originalMessages = createOriginalMessage(message);
-        originalMessageRepository.save(originalMessages);
+        OrgIOTMessage orgIOTMessage = createOriginalMessage(message);
+        originalMessageRepository.save(orgIOTMessage);
     }
 
-    private OriginalMessages createOriginalMessage(IncomingIOTMessage message) {
-        return OriginalMessages.builder()
+    private OrgIOTMessage createOriginalMessage(IncomingIOTMessage message) {
+        return OrgIOTMessage.builder()
                 .id(UUID.randomUUID().toString())
                 .messageCount(message.getMessageCount())
                 .messageTimeStamp(message.getMessageTimeStamp())
